@@ -21,7 +21,7 @@ class ScraperController extends Controller
         // Connect to the existing Chrome WebDriver instance running on port 9515
         $driver = RemoteWebDriver::create('http://localhost:9515', $capabilities);
 
-        // try {
+        try {
             // Navigate to the Goodreads shelf page
             $driver->get('https://www.goodreads.com/shelf/show/translated');
 
@@ -62,10 +62,10 @@ class ScraperController extends Controller
             // Return the scraped book details
             return response()->json(['book_details' => $bookDetails]);
 
-        // } catch (\Exception $e) {
-        //     // Handle any exceptions
-        //     $driver->quit();
-        //     return response()->json(['error' => $e->getMessage()], 500);
-        // }
+        } catch (\Exception $e) {
+            // Handle any exceptions
+            $driver->quit();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
